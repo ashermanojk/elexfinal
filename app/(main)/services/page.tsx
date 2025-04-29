@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import { motion } from "framer-motion";
+import ServicesList from "@/components/sections/services-list";
 
 export default function ServicesPage() {
   return (
@@ -14,7 +15,7 @@ export default function ServicesPage() {
       <div className="relative w-full min-h-[40vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Animated gradient backgrounds */}
         <motion.div
-          className="absolute inset-0 bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
+          className="absolute inset-0 bg-foreground/10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
           initial={{ opacity: 1, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
@@ -47,71 +48,9 @@ export default function ServicesPage() {
       </div>
 
       {/* Services List */}
-      <section id="services-list" className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <SectionHeading
-            title="Our Comprehensive Services"
-            subtitle="We offer a wide range of automation solutions to meet your specific needs."
-            centered
-          />
-
-          <div className="space-y-16 mt-12 ">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                id={service.id}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-card p-5 rounded-xl"
-              >
-                <div
-                  className={`order-2 ${
-                    index % 2 === 0 ? "lg:order-2" : "lg:order-1"
-                  }`}
-                >
-                  <div className="relative">
-                    <div className="aspect-video max-w-md mx-auto relative rounded-xl overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
-                          <div className="w-10 h-10 rounded-full bg-primary" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className={`order-1 ${
-                    index % 2 === 0 ? "lg:order-1" : "lg:order-2"
-                  }`}
-                >
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    {service.description}
-                  </p>
-
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <CheckCircle2 className="h-6 w-6 text-primary mr-3 flex-shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button asChild>
-                    <Link href="/contact">
-                      Inquire About This Service
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="container mx-auto px-4">
+      <ServicesList />
+      </div>
 
       {/* Process Section */}
       <section className="py-20 bg-slate-50 dark:bg-slate-900">
@@ -191,87 +130,6 @@ export default function ServicesPage() {
     </>
   );
 }
-
-const services = [
-  {
-    id: "industrial-automation",
-    title: "Industrial Automation",
-    description:
-      "We develop comprehensive automation systems that streamline manufacturing processes, increase productivity, and reduce operational costs.",
-    features: [
-      "PLC and SCADA systems integration",
-      "Motion control and robotics",
-      "Process control and monitoring",
-      "Custom HMI development",
-      "Industrial IoT solutions",
-    ],
-  },
-  {
-    id: "special-purpose-machinery",
-    title: "Special Purpose Machinery",
-    description:
-      "We design and build custom machines tailored to your specific production requirements, helping you achieve unique manufacturing capabilities.",
-    features: [
-      "Custom machine design and fabrication",
-      "Automated assembly systems",
-      "Testing and inspection equipment",
-      "Material handling solutions",
-      "Retrofitting existing machinery",
-    ],
-  },
-  {
-    id: "process-automation",
-    title: "Process Automation",
-    description:
-      "Our process automation solutions optimize your industrial processes with intelligent control systems and comprehensive monitoring capabilities.",
-    features: [
-      "Batch process automation",
-      "Continuous process control",
-      "Data acquisition and analysis",
-      "Quality control automation",
-      "Energy management systems",
-    ],
-  },
-  {
-    id: "turnkey-projects",
-    title: "Turnkey Projects",
-    description:
-      "We provide end-to-end solutions from concept to commissioning, managing all aspects of your automation project for seamless implementation.",
-    features: [
-      "Comprehensive project management",
-      "System design and engineering",
-      "Installation and commissioning",
-      "Training and documentation",
-      "Ongoing support and maintenance",
-    ],
-  },
-  {
-    id: "product-development",
-    title: "Product Development",
-    description:
-      "Our innovative engineering and design services help bring your product ideas to life, from concept to prototype to production-ready designs.",
-    features: [
-      "Concept development and validation",
-      "3D modeling and simulation",
-      "Prototype development",
-      "Design for manufacturability",
-      "Product testing and optimization",
-    ],
-  },
-  {
-    id: "contract-manufacturing",
-    title: "Contract Manufacturing",
-    description:
-      "We offer reliable and cost-effective manufacturing services tailored to your specifications, ensuring high-quality production outcomes.",
-    features: [
-      "Precision machining and fabrication",
-      "Assembly and integration",
-      "Quality control and testing",
-      "Supply chain management",
-      "Flexible production capacity",
-    ],
-  },
-];
 
 const process = [
   {

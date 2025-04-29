@@ -23,7 +23,7 @@ export default function Home() {
       const { data } = await supabase
         .from('services')
         .select('*')
-        .order('title');
+        .order('id');
 
       if (data) {
         setServices(data);

@@ -70,12 +70,12 @@ export default function HeroSection() {
           >
              {/* Ensure text alignment is left within this div */}
             <div className="text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondry-foreground mb-6 leading-tight">
                 Smart Automation <br />
                 <span className="text-primary">Solutions</span> for <br />
                 <span className="text-secondary">Industry Excellence</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 mb-8">
+              <p className="text-lg md:text-xl text-secondry/10 mb-8">
                 Delivering innovative industrial automation solutions and special-purpose machines that empower businesses
                 to achieve efficiency, precision, and reliability.
               </p>
@@ -90,7 +90,7 @@ export default function HeroSection() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-full border-slate-700 text-white hover:bg-slate-800"
+                  className="rounded-full border-slate-700 text-secondry/10 hover:bg-slate-800"
                 >
                   <Link href="/contact">
                     Contact Us

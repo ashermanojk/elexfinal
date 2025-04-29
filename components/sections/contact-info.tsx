@@ -62,15 +62,15 @@ export default function ContactInfo() {
           <div>
             <h3 className="font-semibold mb-1">Business Hours</h3>
             <p className="text-muted-foreground">
-              Monday - Friday: 8:00 AM - 5:00 PM
+              Monday - Saturday: 8:00 AM - 5:00 PM
               <br />
-              Saturday - Sunday: Closed
+              Sunday: Closed
             </p>
           </div>
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <h3 className="font-semibold mb-3">Connect With Us</h3>
         <div className="flex space-x-4">
           <a
@@ -98,7 +98,8 @@ export default function ContactInfo() {
             <Instagram className="h-5 w-5" />
           </a>
         </div>
-      </div>
-    </div>
+      </div>*/}
+    </div> 
+
   )
 }

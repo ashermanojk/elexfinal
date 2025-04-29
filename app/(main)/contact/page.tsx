@@ -20,7 +20,7 @@ export default function ContactPage() {
       <div className="relative w-full min-h-[40vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Animated gradient backgrounds with hover effect */}
         <motion.div
-          className="absolute inset-0 bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
+          className="absolute inset-0 bg-foreground/10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -61,9 +61,9 @@ export default function ContactPage() {
           <LocationMap />
         </div>
 
-        <div className="mt-20">
+        {/* <div className="mt-20">
           <SupportOptions />
-        </div>
+        </div> */}
       </div>
     </>
   );

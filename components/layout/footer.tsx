@@ -21,7 +21,7 @@ export default function Footer() {
               Delivering smart, reliable, and maintenance-friendly automation solutions that empower seamless business
               operations.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <Link href="#" className="text-slate-300 hover:text-primary transition-colors">
                 <Facebook size={20} />
                 <span className="sr-only">Facebook</span>
@@ -38,7 +38,7 @@ export default function Footer() {
                 <Linkedin size={20} />
                 <span className="sr-only">LinkedIn</span>
               </Link>
-            </div>
+            </div> */}
           </div>
 
           <div>

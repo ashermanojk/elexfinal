@@ -99,7 +99,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md shadow-lg py-4 px-4 transition-all duration-300 ease-in-out">
+        <div className="md:hidden absolute top-full left-0 w-full bg-background backdrop-blur-md shadow-lg py-4 px-4 transition-all duration-300 ease-in-out">
           <nav className="flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
@@ -111,6 +111,7 @@ export default function Navbar() {
                   pathname === link.href
                     ? "bg-primary/10 text-primary"
                     : "hover:bg-muted"
+                    
                 )}
               >
                 {link.name}

@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="relative w-full min-h-[40vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Animated gradient backgrounds */}
         <motion.div
-          className="absolute inset-0 bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
+          className="absolute inset-0 bg-foreground/10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -177,37 +177,6 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
                 <p className="text-muted-foreground">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-slate-50 dark:bg-slate-900">
-        <div className="container mx-auto px-4">
-          <SectionHeading
-            title="Our Leadership Team"
-            subtitle="Meet the experts behind Elextrio Automation's success."
-            centered
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {team.map((member, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-xl overflow-hidden border border-border shadow-sm group"
-              >
-                <div className="h-64 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-700" />
-                  </div>
-                </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                  <p className="text-primary mb-3">{member.position}</p>
-                  <p className="text-muted-foreground text-sm">{member.bio}</p>
-                </div>
               </div>
             ))}
           </div>
