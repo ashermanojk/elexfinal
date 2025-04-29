@@ -7,6 +7,20 @@ import Sidebar from './components/Sidebar'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+// Helper function to check auth token
+function checkAuthToken() {
+  // Try localStorage first
+  try {
+    const localToken = localStorage.getItem('auth_token')
+    if (localToken) return true
+  } catch (err) {
+    console.error("LocalStorage error:", err)
+  }
+  
+  // Fall back to cookie
+  return document.cookie.split(';').some(item => item.trim().startsWith('auth_token='))
+}
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -25,18 +39,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     async function checkAuth() {
       try {
         console.log("Checking admin authentication...")
-        // First, check localStorage for quick auth
-        let localAuth
-        try {
-          localAuth = localStorage.getItem('auth_token')
-          console.log("Admin localStorage check:", localAuth ? "token found" : "no token")
-        } catch (err) {
-          console.error("Admin localStorage error:", err)
-          localAuth = null
-        }
         
-        if (localAuth) {
-          // We have a local auth token, but double-check with Supabase
+        // Check for auth token using the helper function
+        const hasAuthToken = checkAuthToken()
+        console.log("Admin auth token check:", hasAuthToken ? "found" : "not found")
+        
+        if (hasAuthToken) {
+          // We have an auth token, but double-check with Supabase
           const supabase = createClient()
           console.log("Verifying admin with Supabase...")
           const { data, error: userError } = await supabase.auth.getUser()
@@ -47,23 +56,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           
           if (data.user) {
             console.log("Admin authenticated:", data.user.email)
-            // Both local and Supabase auth confirmed
+            // Both token and Supabase auth confirmed
             setIsAuthenticated(true)
             setLoading(false)
             clearTimeout(timeoutId)
             return
           } else {
-            console.log("Supabase auth failed despite localStorage token")
-            // Local token is invalid, clear it
-            try {
-              localStorage.removeItem('auth_token')
-            } catch (err) {
-              console.error("Error removing localStorage token:", err)
-            }
+            console.log("Supabase auth failed despite browser token")
+            // Auth token is invalid, clear it
+            clearAuthTokens()
           }
         }
         
-        // No local auth or Supabase session, redirect to login
+        // No auth token or Supabase session, redirect to login
         console.log("No admin authentication found, redirecting to login")
         window.location.href = `/login?redirectTo=${encodeURIComponent(pathname)}`
         
@@ -72,12 +77,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         setError(`Authentication error: ${error.message || "Unknown error"}`)
         setLoading(false)
         
-        // Clear local auth token on error
-        try {
-          localStorage.removeItem('auth_token')
-        } catch (err) {
-          console.error("Error removing localStorage token:", err)
-        }
+        // Clear auth tokens on error
+        clearAuthTokens()
       } finally {
         clearTimeout(timeoutId)
       }
@@ -87,6 +88,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     
     return () => clearTimeout(timeoutId)
   }, [pathname])
+
+  // Helper function to clear auth tokens
+  function clearAuthTokens() {
+    // Clear localStorage
+    try {
+      localStorage.removeItem('auth_token')
+    } catch (err) {
+      console.error("Error removing localStorage token:", err)
+    }
+    
+    // Clear cookie
+    document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+  }
 
   // If checking auth or redirecting, show minimal loading state
   if (loading) {

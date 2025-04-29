@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@/supabase/config"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,48 @@ import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
 
-export default function Login() {
+// Helper function to set both cookie and localStorage
+function setAuthToken() {
+  // Set localStorage for client-side checks
+  try {
+    localStorage.setItem('auth_token', 'authenticated')
+  } catch (err) {
+    console.error("Could not set localStorage:", err)
+  }
+  
+  // Set cookie for middleware checks (30-day expiration)
+  document.cookie = `auth_token=authenticated; path=/; max-age=${60*60*24*30}; SameSite=Lax`
+}
+
+// Helper function to check auth token
+function getAuthToken() {
+  // Try localStorage first
+  try {
+    const localToken = localStorage.getItem('auth_token')
+    if (localToken) return true
+  } catch (err) {
+    console.error("LocalStorage error:", err)
+  }
+  
+  // Fall back to cookie
+  return document.cookie.split(';').some(item => item.trim().startsWith('auth_token='))
+}
+
+// Helper function to clear auth token
+function clearAuthToken() {
+  // Clear localStorage
+  try {
+    localStorage.removeItem('auth_token')
+  } catch (err) {
+    console.error("LocalStorage error:", err)
+  }
+  
+  // Clear cookie
+  document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+}
+
+// Separate component that uses searchParams
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState("")
@@ -34,19 +75,13 @@ export default function Login() {
       try {
         console.log("Checking authentication status...")
         
-        // First, check localStorage for our manual auth flag
-        let isAuthenticated
-        try {
-          isAuthenticated = localStorage.getItem('auth_token')
-          console.log("LocalStorage auth check:", isAuthenticated ? "found" : "not found")
-        } catch (err) {
-          console.error("LocalStorage error:", err)
-          isAuthenticated = null
-        }
+        // Check for auth token using helper function
+        const isAuthenticated = getAuthToken()
+        console.log("Auth token check:", isAuthenticated ? "found" : "not found")
         
-        // If we have a local token, skip Supabase check and go directly to target
+        // If we have a token, skip Supabase check and go directly to target
         if (isAuthenticated) {
-          console.log("Found local auth token, redirecting to:", redirectTarget)
+          console.log("Found auth token, redirecting to:", redirectTarget)
           window.location.href = redirectTarget
           return
         }
@@ -62,12 +97,8 @@ export default function Login() {
         
         if (data.session) {
           console.log("Supabase session found:", data.session.user.email)
-          // If Supabase confirms auth, set our local token and redirect
-          try {
-            localStorage.setItem('auth_token', 'authenticated')
-          } catch (err) {
-            console.error("Could not set localStorage:", err)
-          }
+          // If Supabase confirms auth, set our tokens
+          setAuthToken()
           console.log("Auth confirmed by Supabase, redirecting to:", redirectTarget)
           window.location.href = redirectTarget
         } else {
@@ -107,13 +138,9 @@ export default function Login() {
       
       console.log("Login successful:", data.user?.email)
       
-      // On successful login, set local auth token and redirect
-      try {
-        localStorage.setItem('auth_token', 'authenticated')
-        console.log("Set auth token in localStorage")
-      } catch (err) {
-        console.error("Error setting localStorage:", err)
-      }
+      // On successful login, set auth token and redirect
+      setAuthToken()
+      console.log("Set auth tokens in browser")
       
       console.log("Login successful, redirecting to:", redirectTarget)
       
@@ -223,5 +250,21 @@ export default function Login() {
         </form>
       </Card>
     </div>
+  )
+}
+
+// Main component with Suspense boundary
+export default function Login() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="text-orange-400 text-xl flex items-center">
+          <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+          Loading...
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   )
 } 

@@ -7,6 +7,19 @@ import { createClient } from '@/supabase/config';
 import { Button } from '@/components/ui/button';
 import { LogOut, User, AlertCircle } from 'lucide-react';
 
+// Helper function to clear auth tokens
+function clearAuthTokens() {
+  // Clear localStorage
+  try {
+    localStorage.removeItem('auth_token')
+  } catch (err) {
+    console.error("Error removing localStorage token:", err)
+  }
+  
+  // Clear cookie
+  document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -31,8 +44,8 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      // Clear local auth token first
-      localStorage.removeItem('auth_token')
+      // Clear auth tokens from browser
+      clearAuthTokens()
       
       // Then sign out of Supabase
       const supabase = createClient()
