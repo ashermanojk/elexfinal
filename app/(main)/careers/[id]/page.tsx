@@ -233,7 +233,7 @@ export default function ApplicationForm() {
         </div>
       ) : job ? (
         <>
-          <div className="mb-12 space-y-6">
+          <div className="mb-12 space-y-6 mt-12">
             <h1 className="text-4xl font-bold text-primary">{job.title}</h1>
             <div className="flex gap-4 text-muted-foreground">
               <span>{job.location}</span>
@@ -248,10 +248,10 @@ export default function ApplicationForm() {
             </div>
             
             <div className="prose dark:prose-invert max-w-none">
-              <h3 className="text-2xl font-semibold">About the Role</h3>
+              <h3 className="text-2xl font-semibold py-4">About the Role</h3>
               <p>{job.description}</p>
               
-              <h3 className="text-2xl font-semibold mt-6">Requirements</h3>
+              <h3 className="text-2xl font-semibold my-6">Requirements</h3>
               <ul className="space-y-2">
                 {job.requirements.map((req, i) => (
                   <li key={i} className="flex items-start">
