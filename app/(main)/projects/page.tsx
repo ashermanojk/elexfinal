@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { createClient } from "@/supabase/config";
 import { toast } from "@/hooks/use-toast";
+import CtaSection from "@/components/sections/cta-section";
 
 // Define project type
 type Project = {
@@ -33,18 +34,18 @@ export default function ProjectsPage() {
       try {
         setLoading(true);
         const supabase = createClient();
-        
+
         // Fetch featured projects from Supabase
         const { data, error } = await supabase
           .from('projects')
           .select('*')
           .eq('is_featured', true)
           .order('created_at', { ascending: false });
-        
+
         if (error) {
           throw error;
         }
-        
+
         setFeaturedProjects(data || []);
       } catch (error: any) {
         console.error('Error fetching projects:', error);
@@ -57,7 +58,7 @@ export default function ProjectsPage() {
         setLoading(false);
       }
     };
-    
+
     fetchProjects();
   }, []);
 
@@ -125,17 +126,16 @@ export default function ProjectsPage() {
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     <div
-                      className={`${
-                        index % 2 === 0 ? "order-1" : "order-1 lg:order-2"
-                      }`}
+                      className={`${index % 2 === 0 ? "order-1" : "order-1 lg:order-2"
+                        }`}
                     >
                       <div className="h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center p-8">
                         {project.image_url ? (
                           <div className="aspect-video w-full rounded-xl overflow-hidden">
-                            <img 
-                              src={project.image_url} 
+                            <img
+                              src={project.image_url}
                               alt={project.title}
-                              className="w-full h-full object-cover" 
+                              className="w-full h-full object-cover"
                             />
                           </div>
                         ) : (
@@ -151,9 +151,8 @@ export default function ProjectsPage() {
                     </div>
 
                     <div
-                      className={`p-8 flex flex-col justify-center ${
-                        index % 2 === 0 ? "order-2" : "order-2 lg:order-1"
-                      }`}
+                      className={`p-8 flex flex-col justify-center ${index % 2 === 0 ? "order-2" : "order-2 lg:order-1"
+                        }`}
                     >
                       <div className="mb-4">
                         <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
@@ -179,8 +178,8 @@ export default function ProjectsPage() {
                         </div>
                       </div>
                       <Button asChild>
-                        <Link href={`/projects/${project.slug}`}>
-                          View Project Details
+                        <Link href={`/contact`}>
+                          Message Us for Project Details!
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
@@ -215,15 +214,6 @@ export default function ProjectsPage() {
                 <p className="text-muted-foreground mb-4">
                   {category.description}
                 </p>
-                <Button
-                  asChild
-                  variant="link"
-                  className="p-0 h-auto font-medium"
-                >
-                  <Link href={`/projects/category/${category.slug}`}>
-                    View Projects <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
               </div>
             ))}
           </div>
@@ -231,61 +221,10 @@ export default function ProjectsPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <SectionHeading
-            title="Client Testimonials"
-            subtitle="Hear what our clients have to say about our automation solutions."
-            centered
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-xl p-6 border border-border shadow-sm"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="mr-4">
-                    <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700"></div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">{testimonial.name}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.position}, {testimonial.company}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground italic">
-                  "{testimonial.quote}"
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* CTA Section */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(67,56,202,0.3),rgba(255,126,0,0.2))]" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Start Your Next Project?
-            </h2>
-            <p className="text-lg text-slate-300 mb-8">
-              Contact us today to discuss how we can help you achieve your
-              automation goals.
-            </p>
-            <Button asChild size="lg" className="rounded-full">
-              <Link href="/contact">
-                Get in Touch
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CtaSection />
     </>
   );
 }
@@ -329,26 +268,3 @@ const categories = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Amit Patel",
-    position: "Operations Director",
-    company: "AutoParts Manufacturing Ltd.",
-    quote:
-      "Elextrio Automation delivered an exceptional assembly line solution that exceeded our expectations. Their attention to detail and commitment to quality resulted in significant improvements in our production efficiency.",
-  },
-  {
-    name: "Dr. Priya Sharma",
-    position: "Production Head",
-    company: "MediPharm Solutions",
-    quote:
-      "The packaging system implemented by Elextrio has transformed our production capabilities while ensuring we maintain compliance with all regulatory requirements. Their team's expertise was evident throughout the project.",
-  },
-  {
-    name: "Rajiv Mehta",
-    position: "Logistics Manager",
-    company: "Global Logistics Inc.",
-    quote:
-      "The warehouse management system has revolutionized our operations. Real-time tracking and analytics have given us unprecedented visibility into our inventory and processes, leading to substantial cost savings.",
-  },
-];

@@ -1,6 +1,13 @@
 import { MapPin, Phone, Mail, Clock, Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import { useContent } from "@/components/ContentProvider";
+import React from "react";
 
 export default function ContactInfo() {
+  const { getContentText, getContentArray } = useContent();
+
+  const email = getContentText("contact-info-email");
+  const phone = getContentText("contact-info-phone");
+  const address = getContentArray("contact-info-address");
   return (
     <div className="space-y-8">
       <div>
@@ -15,14 +22,15 @@ export default function ContactInfo() {
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center mr-4">
             <MapPin className="h-5 w-5 text-primary" />
           </div>
-          <div>
+          <div> 
             <h3 className="font-semibold mb-1">Our Location</h3>
             <p className="text-muted-foreground">
-              No 3 Akrvathi 3rd Block,
-              <br />
-              Dr.Shivaram Karanth Nagar,
-              <br />
-              Sampigehalli, Bengaluru, Karnataka 560077
+              {address.map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < address.length - 1 && <br />}
+                </React.Fragment>
+              ))}
             </p>
           </div>
         </div>
@@ -34,9 +42,7 @@ export default function ContactInfo() {
           <div>
             <h3 className="font-semibold mb-1">Phone</h3>
             <p className="text-muted-foreground">
-              Main: +1 (555) 123-4567
-              <br />
-              Support: +1 (555) 987-6543
+              {phone}
             </p>
           </div>
         </div>
@@ -48,9 +54,7 @@ export default function ContactInfo() {
           <div>
             <h3 className="font-semibold mb-1">Email</h3>
             <p className="text-muted-foreground">
-              General: info@elextrioautomation.com
-              <br />
-              Support: support@elextrioautomation.com
+              {email}
             </p>
           </div>
         </div>

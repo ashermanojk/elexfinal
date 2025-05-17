@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/page-header";
 import ContactForm from "@/components/sections/contact-form";
@@ -7,6 +8,7 @@ import ContactInfo from "@/components/sections/contact-info";
 import LocationMap from "@/components/sections/location-map";
 import SupportOptions from "@/components/sections/support-options";
 import { motion } from "framer-motion";
+import { getContent } from "@/lib/content";
 
 /* export const metadata: Metadata = {
   title: "Contact Us | Elextrio Automation",
@@ -15,6 +17,24 @@ import { motion } from "framer-motion";
 }; */
 
 export default function ContactPage() {
+  const [pageTitle, setPageTitle] = useState("Contact Us");
+  const [pageDescription, setPageDescription] = useState("Get in touch with our team for inquiries and consultations");
+  
+  // Load content on client-side
+  useEffect(() => {
+    // Fetch contact page content
+    fetch('/api/content')
+      .then(res => res.json())
+      .then(data => {
+        const contactInfo = data.find((item: any) => item.contentId === "contact-info");
+        if (contactInfo && contactInfo.text.length >= 2) {
+          setPageTitle(contactInfo.text[0]);
+          setPageDescription(contactInfo.text[1]);
+        }
+      })
+      .catch(error => console.error("Error loading contact content:", error));
+  }, []);
+
   return (
     <>
       <div className="relative w-full min-h-[40vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
@@ -44,8 +64,8 @@ export default function ContactPage() {
             }}
           >
             <PageHeader
-              title="Contact Us"
-              description="Get in touch with our team for inquiries and consultations"
+              title={pageTitle}
+              description={pageDescription}
             />
           </motion.div>
         </div>
@@ -64,7 +84,11 @@ export default function ContactPage() {
         {/* <div className="mt-20">
           <SupportOptions />
         </div> */}
+        
       </div>
+
+      
+      
     </>
   );
 }

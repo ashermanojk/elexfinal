@@ -8,7 +8,8 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
-import LogoImage from "@/public/images/ElextrioLogo.svg";
+import LogoImageDark from "@/public/images/ElextrioLogoDark.svg";
+import LogoImageLight from "@/public/images/ElextrioLogoLight.svg";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -46,12 +47,21 @@ export default function Navbar() {
         <div className="relative flex-col h-10 w-60 items-center justify-center">
           <Link href="/" className="block w-full h-full relative">
             <Image
-              src={LogoImage}
+              src={LogoImageLight}
               alt="Elextrio Logo"
               fill
+              className="block dark:hidden" // Show in light mode, hide in dark mode
             />
-          </Link>
+            <Image
+              src={LogoImageDark}
+              alt="Elextrio Logo"
+              fill
+              className="hidden dark:block" // Hide in light mode, show in dark mode
+            />
+            </Link>
+          <div/>
         </div>
+        
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -111,7 +121,7 @@ export default function Navbar() {
                   pathname === link.href
                     ? "bg-primary/10 text-primary"
                     : "hover:bg-muted"
-                    
+
                 )}
               >
                 {link.name}

@@ -1,6 +1,5 @@
 "use client";
 
-
 import HeroSection from "../../components/home/hero-section"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { Button } from "@/components/ui/button"
@@ -11,10 +10,12 @@ import { useState, useEffect } from "react"
 import { Service } from "@/types"
 import { createClient } from "@/supabase/config"
 import aboutImage from "@/public/images/1.png"
+import CtaSection from "@/components/sections/cta-section";
+import { useContent } from "@/components/ContentProvider"
 
 export default function Home() {
-
-  const [services, setServices] = useState<Service>([]);
+  const { getContentText, getContentArray } = useContent();
+  const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,6 +35,37 @@ export default function Home() {
     fetchServices();
   }, []);
 
+  // Use content for stats section
+  const statsData = [
+    {
+      id: "projects-completed",
+      valueId: "home-stats-projects-value",
+      labelId: "home-stats-projects-label",
+      descriptionId: "home-stats-projects-description",
+      defaultValue: "30+",
+      defaultLabel: "Projects Completed",
+      defaultDescription: "Successfully delivered automation solutions across industries",
+    },
+    {
+      id: "client-satisfaction",
+      valueId: "home-stats-satisfaction-value",
+      labelId: "home-stats-satisfaction-label",
+      descriptionId: "home-stats-satisfaction-description",
+      defaultValue: "95%",
+      defaultLabel: "Client Satisfaction",
+      defaultDescription: "Our clients rate our services and solutions highly",
+    },
+    {
+      id: "support-availability",
+      valueId: "home-stats-support-value",
+      labelId: "home-stats-support-label",
+      descriptionId: "home-stats-support-description",
+      defaultValue: "24/7",
+      defaultLabel: "Support",
+      defaultDescription: "Round-the-clock technical assistance for our clients",
+    },
+  ];
+
   return (
     <>
       <HeroSection />
@@ -42,8 +74,8 @@ export default function Home() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeading
-            title="Our Services"
-            subtitle="We offer a comprehensive range of automation solutions tailored to your specific needs."
+            title={getContentText("home-services-heading", "Our Services")}
+            subtitle={getContentText("home-services-subheading", "We offer a comprehensive range of automation solutions tailored to your specific needs.")}
             centered
           />
 
@@ -66,7 +98,7 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground mb-4">{service.description}</p>
                   <Button asChild variant="link" className="p-0 h-auto font-medium">
-                    <Link href={`/services/${service.id}`}>
+                    <Link href={`/services`}>
                       Learn More <ChevronRight className="ml-1 h-4 w-4" />
                     </Link>
                   </Button>
@@ -92,16 +124,14 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Delivering Excellence in <span className="text-primary">Industrial Automation</span>
+                {getContentText("home-section3-heading", "Delivering Excellence in")} <span className="text-primary">Industrial Automation</span>
               </h2>
               <p className="text-muted-foreground mb-6">
-                At Elextrio Automation, we specialize in providing cutting-edge industrial automation solutions and
-                custom-built special-purpose machines. Our focus is on delivering value-driven, efficient, and
-                innovative systems tailored to the unique needs of our clients.
+                {getContentText("home-section3-subheading", "At Elextrio Automation, we specialize in providing cutting-edge industrial automation solutions and custom-built special-purpose machines. Our focus is on delivering value-driven, efficient, and innovative systems tailored to the unique needs of our clients.")}
               </p>
 
               <ul className="space-y-3 mb-8">
-                {aboutPoints.map((point, index) => (
+                {getContentArray("home-section3-points", aboutPoints).map((point, index) => (
                   <li key={index} className="flex items-start">
                     <CheckCircle2 className="h-6 w-6 text-primary mr-3 flex-shrink-0 mt-0.5" />
                     <span>{point}</span>
@@ -145,14 +175,20 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-card rounded-xl p-6 text-center border border-border shadow-sm">
-                <div className="text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                <div className="text-lg font-medium">{stat.label}</div>
-                <p className="text-muted-foreground text-sm mt-2">{stat.description}</p>
+      <section className="py-20 bg-background items-center justify-center">
+        <div className="container mx-auto px-4 items-center justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {statsData.map((stat) => (
+              <div key={stat.id} className="bg-card rounded-xl p-6 text-center border border-border shadow-sm">
+                <div className="text-4xl font-bold text-primary mb-2">
+                  {getContentText(stat.valueId, stat.defaultValue)}
+                </div>
+                <div className="text-lg font-medium">
+                  {getContentText(stat.labelId, stat.defaultLabel)}
+                </div>
+                <p className="text-muted-foreground text-sm mt-2">
+                  {getContentText(stat.descriptionId, stat.defaultDescription)}
+                </p>
               </div>
             ))}
           </div>
@@ -160,37 +196,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(67,56,202,0.3))]" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Manufacturing Process?</h2>
-            <p className="text-lg text-slate-300 mb-8">
-              Contact us today to discuss how our automation solutions can help your business achieve greater
-              efficiency, precision, and reliability.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="rounded-full">
-                <Link href="/contact">
-                  Get in Touch
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full border-slate-700 text-white hover:bg-slate-800"
-              >
-                <Link href="/services">
-                  Explore Services
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaSection/>
     </>
   )
 }
@@ -202,27 +208,4 @@ const aboutPoints = [
   "Focus on simplicity and maintainability",
   "Customer-centric approach with long-term partnerships",
   "Precision engineering and adaptability",
-]
-
-const stats = [
-  {
-    value: "30+",
-    label: "Projects Completed",
-    description: "Successfully delivered automation solutions across industries",
-  },
-  {
-    value: "95%",
-    label: "Client Satisfaction",
-    description: "Our clients rate our services and solutions highly",
-  },
-  {
-    value: "15+",
-    label: "Years Experience",
-    description: "Combined expertise in industrial automation",
-  },
-  {
-    value: "24/7",
-    label: "Support",
-    description: "Round-the-clock technical assistance for our clients",
-  },
 ]

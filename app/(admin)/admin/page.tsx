@@ -1,22 +1,21 @@
 "use client"
-import { redirect } from "next/navigation";
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import  {createClient}  from '../../../supabase/config'
+import { createClient } from '../../../supabase/config'
 
-export default function AdminDashboard() {
+export default function AdminPage() {
   const router = useRouter()
-  const supabase = createClient()
-
+  
   useEffect(() => {
-    const checkSession = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) router.push('/login')
-    }
-    checkSession()
-  }, [router, supabase])
+    // Simple redirect to dashboard without auth check
+    // This will be handled by the layout component
+    router.push('/admin/dashboard')
+  }, [router])
 
+  // Return a loading UI while redirecting
   return (
-    redirect("/admin/dashboard")
-  );
-} 
+    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="text-white">Redirecting to dashboard...</div>
+    </div>
+  )
+}

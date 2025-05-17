@@ -108,7 +108,7 @@ export default function ContactForm() {
             <label htmlFor="name" className="text-sm font-medium">
               Full Name
             </label>
-            <Input id="name" name="name" placeholder="John Smith" required />
+            <Input id="name" name="name" placeholder="Sanjay Kumar" required />
           </div>
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">
@@ -118,7 +118,7 @@ export default function ContactForm() {
               id="email"
               name="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder="sanjay@example.com"
               required
             />
           </div>
@@ -129,7 +129,7 @@ export default function ContactForm() {
             <label htmlFor="phone" className="text-sm font-medium">
               Phone Number
             </label>
-            <Input id="phone" name="phone" placeholder="+1 (555) 123-4567" />
+            <Input id="phone" name="phone" placeholder="+91 00000 00000" />
           </div>
           <div className="space-y-2">
             <label htmlFor="subject" className="text-sm font-medium">

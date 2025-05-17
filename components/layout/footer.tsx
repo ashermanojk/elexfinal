@@ -1,22 +1,40 @@
+"use client"
 import Link from "next/link"
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import LogoImage from "../../public/images/ElextrioLogo.svg"
+import LogoImageLight from "../../public/images/ElextrioLogoLight.svg"
+import LogoImageDark from "../../public/images/ElextrioLogoDark.svg"
+import { useContent } from "@/components/ContentProvider";
+import React from "react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { getContentArray } = useContent();
+  const address = getContentArray("contact-info-address");
 
   return (
     <footer className="bg-slate-900 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4 ">
-            <Image
-              src={LogoImage}
-              alt="Elextrio Automation Logo"
-              className="h-12 w-auto mb-4 bg-gray-100 px-2"
-            />
+            <div className="relative flex-col h-10 w-60 items-center justify-center bg-background">
+              <Link href="/" className="block w-full h-full relative">
+                <Image
+                  src={LogoImageLight}
+                  alt="Elextrio Logo"
+                  fill
+                  className="block dark:hidden" // Show in light mode, hide in dark mode
+                />
+                <Image
+                  src={LogoImageDark}
+                  alt="Elextrio Logo"
+                  fill
+                  className="hidden dark:block" // Hide in light mode, show in dark mode
+                />
+              </Link>
+              <div />
+            </div>
             <p className="text-slate-300 max-w-xs">
               Delivering smart, reliable, and maintenance-friendly automation solutions that empower seamless business
               operations.
@@ -133,17 +151,23 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
                 <MapPin size={20} className="text-primary mt-1 flex-shrink-0" />
-                <span className="text-slate-300">No 3 Akrvathi 3rd Block,
-                  Dr.Shivaram Karanth Nagar,
-                  Sampigehalli, Bengaluru, Karnataka 560077</span>
+                <span className="text-slate-300"><p>
+                {address.map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < address.length - 1 && <br />}
+                </React.Fragment>
+              ))}
+                </p></span>
+                  
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={20} className="text-primary flex-shrink-0" />
-                <span className="text-slate-300">+91 98765 43210</span>
+                <span className="text-slate-300">+91 81238 65073</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={20} className="text-primary flex-shrink-0" />
-                <span className="text-slate-300">info@elextrioautomation.com</span>
+                <span className="text-slate-300">info@elextrio.com</span>
               </li>
             </ul>
             <div className="mt-6">
@@ -155,7 +179,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-800 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-slate-400 text-sm">&copy; {currentYear} Elextrio Automation. All rights reserved.</p>
+          <p className="text-slate-400 text-sm">&copy; {currentYear} Elextrio. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
           </div>
         </div>

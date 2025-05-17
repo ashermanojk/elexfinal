@@ -34,7 +34,7 @@ export default function CircularCarousel({
 
   // Auto-rotate images unless hovering
   useEffect(() => {
-    if (images.length <= 1 || isHovering) return
+    if (images.length <= 1 ) return
 
     const nextSlide = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)

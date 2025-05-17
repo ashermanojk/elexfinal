@@ -1,0 +1,86 @@
+{address.map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < address.length - 1 && <br />}
+                </React.Fragment>
+              ))}
+
+               {/* Add Content Form */}
+      <form onSubmit={handleAddContent} className="space-y-4 bg-slate-700 p-4 rounded-lg mb-6">
+        <h3 className="font-semibold mb-2">Add New Content</h3>
+        <div>
+          <label className="block font-semibold mb-1">Content ID</label>
+          <input
+            type="text"
+            value={newContent.contentId}
+            onChange={e => setNewContent({ ...newContent, contentId: e.target.value })}
+            className="w-full p-2 rounded border"
+            required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Text</label>
+          {newContent.text.map((t, idx) => (
+            <div key={idx} className="flex gap-2 mb-1">
+              <textarea
+                value={t}
+                onChange={e => {
+                  const arr = [...newContent.text];
+                  arr[idx] = e.target.value;
+                  setNewContent({ ...newContent, text: arr });
+                }}
+                className="w-full p-2 rounded border"
+                rows={2}
+                required
+              />
+              <button 
+                type="button" 
+                onClick={() => {
+                  const arr = [...newContent.text];
+                  arr.splice(idx, 1);
+                  setNewContent({ ...newContent, text: arr.length ? arr : [""] });
+                }} 
+                className="text-red-500"
+                disabled={newContent.text.length <= 1}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={() => setNewContent({ ...newContent, text: [...newContent.text, ""] })} className="text-green-500">Add Text</button>
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Image (optional)</label>
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={newContent.image || ""}
+              onChange={e => setNewContent({ ...newContent, image: e.target.value })}
+              className="flex-1 px-2 py-1 rounded border"
+            />
+            <ImageUpload bucket="images" onImageUploaded={url => setNewContent({ ...newContent, image: url })} existingImageUrl={newContent.image} />
+          </div>
+        </div>
+        <button type="submit" disabled={adding} className="bg-green-600 text-white px-4 py-2 rounded">
+          {adding ? "Adding..." : "Add Content"}
+        </button>
+      </form>
+      
+      {loading && <div className="my-2 p-2 bg-slate-800 rounded">Loading...</div>}
+      
+      <div className="mb-6">
+        <label className="block mb-2 font-semibold">Select Content ID:</label>
+        <select
+          value={selectedContentId}
+          onChange={e => setSelectedContentId(e.target.value)}
+          className="w-full p-2 rounded border"
+        >
+          <option value="">Select content...</option>
+          {contents.map(content => (
+            <option key={content.contentId} value={content.contentId}>
+              {content.contentId}
+            </option>
+          ))}
+        </select>
+      </div>
+      

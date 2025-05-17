@@ -82,7 +82,13 @@ function LoginForm() {
         // If we have a token, skip Supabase check and go directly to target
         if (isAuthenticated) {
           console.log("Found auth token, redirecting to:", redirectTarget)
-          window.location.href = redirectTarget
+          // Check for redirect loop
+          if (redirectTarget.includes('/admin') && window.location.href.includes('/login?redirectTo=/admin')) {
+            // Break the loop by sending to a specific admin page
+            window.location.href = '/admin/dashboard'
+          } else {
+            window.location.href = redirectTarget
+          }
           return
         }
         
