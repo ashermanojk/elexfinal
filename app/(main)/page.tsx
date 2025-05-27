@@ -70,7 +70,6 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-
       {/* Services Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
@@ -79,11 +78,9 @@ export default function Home() {
             subtitle={getContentText("home-services-subheading", "We offer a comprehensive range of automation solutions tailored to your specific needs.")}
             centered
           />
-
           <div className="mt-12">
             <ServicesCarousel services={services} />
           </div>
-
           <div className="text-center mt-12">
             <Button asChild size="lg">
               <Link href="/services">
@@ -94,7 +91,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* About Section */}
       <section className="py-20 bg-slate-50 dark:bg-slate-900">
         <div className="container mx-auto px-4">
@@ -106,7 +102,6 @@ export default function Home() {
               <p className="text-muted-foreground mb-6">
                 {getContentText("home-section3-subheading", "At Elextrio Automation, we specialize in providing cutting-edge industrial automation solutions and custom-built special-purpose machines. Our focus is on delivering value-driven, efficient, and innovative systems tailored to the unique needs of our clients.")}
               </p>
-
               <ul className="space-y-3 mb-8">
                 {getContentArray("home-section3-points", aboutPoints).map((point, index) => (
                   <li key={index} className="flex items-start">
@@ -115,7 +110,6 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-
               <Button asChild>
                 <Link href="/about">
                   Learn More About Us
