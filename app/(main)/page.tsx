@@ -66,7 +66,6 @@ export default function Home() {
       defaultDescription: "Round-the-clock technical assistance for our clients",
     },
   ];
-
   return (
     <>
       <HeroSection />
