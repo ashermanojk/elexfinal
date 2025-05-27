@@ -116,7 +116,6 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
-
             <div className="relative">
               <div className="aspect-square max-w-md mx-auto relative">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 blur-3xl" />
@@ -126,14 +125,12 @@ export default function Home() {
                     <div className="w-3/4 h-3/4 relative">
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/40 to-secondary/40 rounded-xl animate-float" />
                       <div className="absolute top-10 left-10 right-10 bottom-10 bg-slate-100 dark:bg-slate-900 rounded-lg shadow-lg flex items-center justify-center">
-
                         <Image
                           src={aboutImage}
                           alt="About Us"
                           className="object-cover w-full h-full rounded-lg animate-float bg-inherit"
                           fill
                         />
-
                       </div>
                     </div>
                   </div>
@@ -143,7 +140,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Stats Section */}
       <section className="py-20 bg-background items-center justify-center">
         <div className="container mx-auto px-4 items-center justify-center">
