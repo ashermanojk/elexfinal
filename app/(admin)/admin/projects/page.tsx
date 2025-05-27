@@ -285,9 +285,9 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="container py-10 space-y-8">
+    <div className="container py-10 space-y-8 ">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Manage Projects</h1>
+        <h1 className="text-3xl font-bold text-gray-100">Manage Projects</h1>
         <Button 
           onClick={() => setEditingProject(null)}
           variant={!editingProject ? "secondary" : "outline"}
@@ -300,10 +300,10 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Projects List */}
         <div className="lg:col-span-1 space-y-4 max-h-[800px] overflow-y-auto pr-2">
-          <h2 className="text-lg font-semibold">Projects</h2>
+          <h2 className="text-lg font-semibold text-gray-100">Projects</h2>
 
           {projects.length === 0 ? (
-            <div className="p-6 border rounded-lg text-muted-foreground text-center">
+            <div className="p-6 border rounded-lg text-gray-100 text-center">
               No projects found. Create your first project!
             </div>
           ) : (
@@ -319,7 +319,7 @@ export default function ProjectsPage() {
                 }`}
                 onClick={() => setEditingProject(project)}
               >
-                <div className="relative h-32 bg-muted">
+                <div className="relative h-32 bg-gray-100/10">
                   {project.image_url && (
                     <Image
                       src={project.image_url}
@@ -363,12 +363,12 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="p-4">
-                  <h3 className="font-medium">{project.title}</h3>
-                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  <h3 className="font-medium text-gray-100">{project.title}</h3>
+                  <div className="flex justify-between text-xs text-gray-100 mt-1">
                     <span>{project.category}</span>
                     <span>{project.industry}</span>
                   </div>
-                  <p className="text-sm mt-2 line-clamp-2 text-muted-foreground">{project.description}</p>
+                  <p className="text-sm mt-2 line-clamp-2 text-gray-100">{project.description}</p>
                 </div>
               </motion.div>
             ))
@@ -378,11 +378,11 @@ export default function ProjectsPage() {
         {/* Project Form */}
         <div className="lg:col-span-2">
           <div className="border rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-6">
+            <h2 className="text-lg font-semibold mb-6 text-gray-100">
               {editingProject ? 'Edit Project' : 'Create New Project'}
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5 bg-card p-6 rounded-lg border border-foreground/30">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <Label htmlFor="title">Project Title <span className="text-red-500">*</span></Label>

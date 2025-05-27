@@ -12,43 +12,14 @@ import { Button } from "@/components/ui/button";
 
 export default function ServicesPage() {
   const { getContentText, getContentArray } = useContent();
-  
+
   return (
     <>
-      <div className="relative w-full min-h-[40vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Animated gradient backgrounds */}
-        <motion.div
-          className="absolute inset-0 bg-foreground/10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),rgba(255,255,255,0))]"
-          initial={{ opacity: 1, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,126,0,0.3),transparent_60%)]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        />
 
-        {/* Content container with responsive padding */}
-        <div className="container mx-auto px-4 sm:px-6 py-12 md:py-16 relative z-10">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.3,
-              type: "spring",
-              stiffness: 100,
-            }}
-          >
-            <PageHeader
-              title={getContentText("services-main-heading", "Our Services")}
-              description={getContentText("services-main-subheading", "Comprehensive automation solutions tailored to your industry needs")}
-            />
-          </motion.div>
-        </div>
-      </div>
+      <PageHeader
+        title={getContentText("services-main-heading", "Our Services")}
+        description={getContentText("services-main-subheading", "Comprehensive automation solutions tailored to your industry needs")}
+      />
 
       {/* Services List */}
       <div className="container mx-auto px-4">
@@ -67,10 +38,10 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             {getContentArray("services-process-steps", defaultProcessSteps).map((step, index) => {
               // Split the content by comma if it has one (for title and description)
-              const [title, description] = step.includes(',') 
+              const [title, description] = step.includes(',')
                 ? [step.split(',')[0].trim(), step.split(',')[1].trim()]
                 : [defaultProcessTitles[index], defaultProcessDescriptions[index]];
-              
+
               return (
                 <div
                   key={index}
@@ -90,7 +61,7 @@ export default function ServicesPage() {
               );
             })}
           </div>
-          
+
           <div className="mt-12 text-center">
             <Button asChild size="lg">
               <Link href="/contact">
@@ -103,46 +74,47 @@ export default function ServicesPage() {
       </section>
 
       {/* Industries Section */}
-      <section className="py-20 bg-background">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <SectionHeading
             title={getContentText("services-industries-heading", "Industries We Serve")}
             subtitle={getContentText("services-industries-subheading", "Our automation solutions cater to diverse industrial sectors.")}
             centered
           />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {getContentArray("services-industries", defaultIndustries).map((industry, index) => {
-              // Split the content by comma if it has one (for name and description)
-              const [name, description] = industry.includes(',') 
-                ? [industry.split(',')[0].trim(), industry.split(',')[1].trim()]
-                : [defaultIndustryNames[index], defaultIndustryDescriptions[index]];
-              
-              return (
-                <div
-                  key={index}
-                  className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors duration-300">
-                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
+          <div className="mt-8">
+            <div className="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4">
+              {getContentArray("services-industries", defaultIndustries).map((industry, index) => {
+                const [name, description] = industry.includes(',')
+                  ? [industry.split(',')[0].trim(), industry.split(',')[1].trim()]
+                  : [defaultIndustryNames[index], defaultIndustryDescriptions[index]];
+                return (
+                  <div
+                    key={index}
+                    className="w-[290px] sm:w-[320px] bg-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-xl transition-all flex-shrink-0 flex flex-col items-center text-center group cursor-pointer hover:-translate-y-1 hover:border-primary/70 duration-200 relative"
+                    style={{ minHeight: 220 }}
+                  >
+                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors p-2">
+                      <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+                        <CheckCircle className="h-4 w-4 text-white" />
+                      </div>
                     </div>
+                    <h3 className="text-base font-bold mb-2 text-foreground group-hover:text-primary transition-colors line-clamp-2 min-h-[2.2rem]">
+                      {name}
+                    </h3>
+                    <p className="text-muted-foreground text-xs min-h-[2.8rem]">
+                      {description}
+                    </p>
+                    <span className="absolute top-3 right-3 inline-block w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">
-                    {name}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {description}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <CtaSection/>
+      <CtaSection />
     </>
   );
 }

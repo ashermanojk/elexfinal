@@ -12,6 +12,7 @@ import { createClient } from "@/supabase/config"
 import aboutImage from "@/public/images/1.png"
 import CtaSection from "@/components/sections/cta-section";
 import { useContent } from "@/components/ContentProvider"
+import ServicesCarousel from "../../components/home/services-carousel"
 
 export default function Home() {
   const { getContentText, getContentArray } = useContent();
@@ -79,32 +80,8 @@ export default function Home() {
             centered
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-xl overflow-hidden shadow-md border border-border hover:shadow-lg transition-shadow group"
-              >
-                <div className="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    width={400}
-                    height={300}
-                    className="object-cover w-full h-48 rounded-t-xl group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Button asChild variant="link" className="p-0 h-auto font-medium">
-                    <Link href={`/services`}>
-                      Learn More <ChevronRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
+          <div className="mt-12">
+            <ServicesCarousel services={services} />
           </div>
 
           <div className="text-center mt-12">
