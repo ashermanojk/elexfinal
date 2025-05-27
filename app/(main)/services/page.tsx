@@ -47,7 +47,7 @@ export default function ServicesPage() {
                   key={index}
                   className="bg-card rounded-xl p-6 border border-border shadow-sm relative overflow-hidden group hover:shadow-md transition-all duration-300"
                 >
-                  <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg z-10">
+                  <div className="absolute -top-2 -left-2 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg z-10">
                     {index + 1}
                   </div>
                   <div className="absolute -right-8 -bottom-8 w-32 h-32 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors duration-300"></div>

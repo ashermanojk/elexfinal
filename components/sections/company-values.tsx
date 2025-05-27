@@ -108,20 +108,22 @@ export default function CompanyValues() {
           {/* Navigation Buttons (visible only on mobile) */}
           <div className="md:hidden">
             <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-transparent"
               onClick={scrollPrev}
+              variant="default"
+              size="icon"
+              className="absolute bottom-[-65px] left-6 z-10 rounded-full shadow-xl !p-3 bg-background/80 hover:bg-background/100 backdrop-blur-sm border border-border"
+              aria-label="Previous project"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-5 w-5 text-foreground" />
             </Button>
             <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-transparent"
               onClick={scrollNext}
+              variant="default"
+              size="icon"
+              className="absolute bottom-[-65px] right-6 z-10 rounded-full shadow-xl !p-3 bg-background/80 hover:bg-background/100 backdrop-blur-sm border border-border"
+              aria-label="Next project"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-5 w-5 text-foreground" />
             </Button>
           </div>
         </div>

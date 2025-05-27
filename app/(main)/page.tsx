@@ -109,12 +109,14 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <Button asChild>
-                <Link href="/about">
-                  Learn More About Us
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <div className="flex lg:justify-start justify-center">
+                <Button asChild>
+                  <Link href="/about">
+                    Learn More About Us
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </div>
             <div className="relative">
               <div className="aspect-square max-w-md mx-auto relative">
@@ -162,7 +164,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <CtaSection/>
+      <CtaSection />
     </>
   )
 }

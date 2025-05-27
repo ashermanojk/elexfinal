@@ -31,22 +31,15 @@ export default function CtaSection() {
                 whileTap={{ scale: 0.95 }}
               >
                 Get in Touch
-                <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
               </motion.a>
 
               <motion.a
                 href="/services"
-                className="px-8 py-4 rounded-lg font-medium text-lg bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-blue-600/50 transition-all duration-300 flex items-center justify-center"
+                className="px-8 py-4 rounded-lg font-medium text-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700 hover:border-blue-600/50 transition-all duration-300 flex items-center justify-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Explore Services
-                <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
               </motion.a>
             </div>
           </motion.div>
