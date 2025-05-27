@@ -53,14 +53,12 @@ export default function AboutPage() {
                     <div className="w-3/4 h-3/4 relative">
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/40 to-secondary/40 rounded-xl animate-float" />
                       <div className="absolute top-10 left-10 right-10 bottom-10 bg-slate-100 dark:bg-slate-900 rounded-lg shadow-lg flex items-center justify-center">
-
                         <Image
                           src={img1}
                           alt="About Us"
                           className="object-cover w-full h-full rounded-lg animate-float bg-inherit"
                           fill
                         />
-
                       </div>
                     </div>
                   </div>
@@ -70,7 +68,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Mission & Vision */}
       <section className="py-20 bg-slate-50 dark:bg-slate-900">
         <div className="container mx-auto px-4">
@@ -79,7 +76,6 @@ export default function AboutPage() {
             subtitle={getContentText("about-mission-main-subheading", "Guided by our core principles, we strive to deliver excellence in every project.")}
             centered
           />
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <div className="bg-card rounded-xl p-8 border border-border shadow-sm">
               <h3 className="text-2xl font-semibold mb-4">{getContentText("about-mission-heading", "Our Mission")}</h3>
@@ -91,7 +87,6 @@ export default function AboutPage() {
                 </p>
               ))}
             </div>
-
             <div className="bg-card rounded-xl p-8 border border-border shadow-sm">
               <h3 className="text-2xl font-semibold mb-4">{getContentText("about-vision-heading", "Our Vision")}</h3>
               {getContentArray("about-vision-subheading", [
@@ -105,7 +100,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Company Values */}
       <CompanyValues />
       {/* CTA Section */}
